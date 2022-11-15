@@ -12,4 +12,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     return console.log(`server is up`);
 });
-//# sourceMappingURL=app.js.map
