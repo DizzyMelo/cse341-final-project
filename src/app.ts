@@ -1,11 +1,15 @@
+import 'dotenv/config';
 import express from 'express';
 const app = express();
-const port = 3000;
+
+import mongoose from 'mongoose';
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello, Socratic Method!');
 });
+app.use('/users', require('./routes/users'));
 
 app.listen(port, () => {
-  return console.log(`server is up`);
+  return console.log(`Server is running on port ${port}`);
 });
