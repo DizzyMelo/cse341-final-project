@@ -1,7 +1,7 @@
 {
   "name": "cse341-final-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "The Socratic Method API: Questions and Answers",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
@@ -10,8 +10,8 @@
     "clean": "shx rm -rf dist",
     "copy": "shx cp -r src/public dist"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["CSE-341", "Socratic Method"],
+  "author": "Ben Cornia",
   "license": "ISC",
   "devDependencies": {
     "@types/ejs": "^3.1.1",
