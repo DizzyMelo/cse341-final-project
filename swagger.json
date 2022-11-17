@@ -383,7 +383,41 @@
           "users"
         ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lastName": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "login": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "permissions": {
+                  "example": "any"
+                },
+                "questions": {
+                  "example": "any"
+                },
+                "answers": {
+                  "example": "any"
+                },
+                "likes": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -443,6 +477,39 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lastName": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "login": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "permissions": {
+                  "example": "any"
+                },
+                "questions": {
+                  "example": "any"
+                },
+                "answers": {
+                  "example": "any"
+                },
+                "likes": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
