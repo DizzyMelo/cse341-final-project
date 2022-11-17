@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
 const models_1 = require("../models");
 const User = models_1.db.users;
 /////////
@@ -18,6 +19,7 @@ function post(request, response) {
         // #swagger.tags = ['users']
         let user = {};
         try {
+            // TODO: Check the request.body.login to see if the login is already in use.
             // Create a new document
             const document = {
                 "lastName": request.body.lastName,
@@ -59,12 +61,21 @@ function getOne(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         // #swagger.tags = ['users']
         try {
-            // TODO: Get the document specified by the ID in request.params.id
+            // Get the document specified by the ID in request.params.id
             const id = request.params.id;
+            if (!(0, mongoose_1.isValidObjectId)(id)) {
+                response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+                return;
+            }
             const user = yield User.findById(id);
+            if (!user) {
+                response.status(404).send();
+                return;
+            }
             response.send(user);
         }
         catch (error) {
+            // TODO: Make sure we get 404 errors when the ID isn't found.
             response.status(500).send(error.message);
         }
     });
@@ -75,6 +86,11 @@ function put(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         // #swagger.tags = ['users']
         try {
+            const id = request.params.id;
+            if (!(0, mongoose_1.isValidObjectId)(id)) {
+                response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+                return;
+            }
             // Update the document specified by the ID in request.params.id
             const document = {
                 "lastName": request.body.lastName,
@@ -86,7 +102,11 @@ function put(request, response) {
                 "answers": request.body.answers,
                 "likes": request.body.likes
             };
-            const user = yield User.findByIdAndUpdate(request.params.id, { $set: document });
+            const user = yield User.findByIdAndUpdate(id, { $set: document });
+            if (!user) {
+                response.status(404).send();
+                return;
+            }
             response.status(204).send();
         }
         catch (error) {
@@ -100,11 +120,21 @@ function deleteOne(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         // #swagger.tags = ['users']
         try {
-            // TODO: Delete the document specified by the ID in request.params.id
-            const user = yield User.findByIdAndRemove(request.params.id);
+            const id = request.params.id;
+            if (!(0, mongoose_1.isValidObjectId)(id)) {
+                response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+                return;
+            }
+            // Delete the document specified by the ID in request.params.id
+            const user = yield User.findByIdAndRemove(id);
+            if (!user) {
+                response.status(404).send();
+                return;
+            }
             response.send();
         }
         catch (error) {
+            // TODO: Make sure we get 404 errors when the ID isn't found.
             response.status(500).send(error.message);
         }
     });
