@@ -6,6 +6,8 @@ import * as swaggerUI from 'swagger-ui-express';
 const swaggerDocument = require('../swagger.json')
 
 import mongoose from 'mongoose';
+import { db } from './models';
+
 const port = process.env.PORT || 3000;
 
 
@@ -21,6 +23,18 @@ app.use('/questions', require('./routes/questions'));
 app.use('/answers', require('./routes/answers'));
 app.use('/comments', require('./routes/comments'));
 app.use('/users', require('./routes/users'));
+
+db.mongoose.connect(db.url as string, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+} as mongoose.ConnectOptions)
+.then(() => { 
+  console.log('Connected to the Socrates database.')
+})
+.catch((error: any) => {
+  console.log('Cannot connect to the Socrates database.', error);
+  process.exit();
+});
 
 app.listen(port, () => {
   return console.log(`The Socratic Method is ready to serve up answers on port ${port}`);
