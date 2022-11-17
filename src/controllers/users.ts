@@ -72,7 +72,6 @@ async function getOne(request: express.Request, response: express.Response): Pro
         response.send(user);
     }
     catch (error: any) {
-        // TODO: Make sure we get 404 errors when the ID isn't found.
         response.status(500).send(error.message);
     }
 }
@@ -136,7 +135,6 @@ async function deleteOne(request: express.Request, response: express.Response): 
         response.send();
     }
     catch (error: any) {
-        // TODO: Make sure we get 404 errors when the ID isn't found.
         response.status(500).send(error.message);
     }
 }
