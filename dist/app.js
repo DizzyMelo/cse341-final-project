@@ -31,6 +31,7 @@ const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const swaggerUI = __importStar(require("swagger-ui-express"));
 const swaggerDocument = require('../swagger.json');
+const models_1 = require("./models");
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json()); // With Express 4.16 and later, we no longer need body-parser.  Express does it.
 app.use(express_1.default.urlencoded({ extended: true })); // Must use extended option
@@ -43,6 +44,17 @@ app.use('/questions', require('./routes/questions'));
 app.use('/answers', require('./routes/answers'));
 app.use('/comments', require('./routes/comments'));
 app.use('/users', require('./routes/users'));
+models_1.db.mongoose.connect(models_1.db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+    console.log('Connected to the Socrates database.');
+})
+    .catch((error) => {
+    console.log('Cannot connect to the Socrates database.', error);
+    process.exit();
+});
 app.listen(port, () => {
     return console.log(`The Socratic Method is ready to serve up answers on port ${port}`);
 });
