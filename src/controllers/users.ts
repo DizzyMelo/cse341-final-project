@@ -1,5 +1,6 @@
 import { setDefaultResultOrder } from 'dns';
 import express from 'express';
+import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
 const User = db.users;
 
@@ -10,6 +11,7 @@ async function post(request: express.Request, response: express.Response): Promi
     let user: any = {};
 
     try {
+        // TODO: Check the request.body.login to see if the login is already in use.
         // Create a new document
         const document = {
             "lastName": request.body.lastName,
@@ -54,14 +56,23 @@ async function getAll(request: express.Request, response: express.Response): Pro
 async function getOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
-        // TODO: Get the document specified by the ID in request.params.id
+        // Get the document specified by the ID in request.params.id
         const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
 
         const user = await User.findById(id);
+        if (!user) {
+            response.status(404).send();
+            return;
+        }
         
         response.send(user);
     }
     catch (error: any) {
+        // TODO: Make sure we get 404 errors when the ID isn't found.
         response.status(500).send(error.message);
     }
 }
@@ -72,6 +83,12 @@ async function getOne(request: express.Request, response: express.Response): Pro
 async function put(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
+        const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
+
         // Update the document specified by the ID in request.params.id
         const document = {
             "lastName": request.body.lastName,
@@ -84,8 +101,12 @@ async function put(request: express.Request, response: express.Response): Promis
             "likes": request.body.likes
         }
 
-        const user = await User.findByIdAndUpdate(request.params.id, {$set: document});
-
+        const user = await User.findByIdAndUpdate(id, {$set: document});
+        if (!user) {
+            response.status(404).send();
+            return;
+        }
+        
         response.status(204).send();
     }
     catch (error: any) {
@@ -99,11 +120,23 @@ async function put(request: express.Request, response: express.Response): Promis
 async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
-        // TODO: Delete the document specified by the ID in request.params.id
-        const user = await User.findByIdAndRemove(request.params.id);
+        const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
+
+        // Delete the document specified by the ID in request.params.id
+        const user = await User.findByIdAndRemove(id);
+        if (!user) {
+            response.status(404).send();
+            return;
+        }
+
         response.send();
     }
     catch (error: any) {
+        // TODO: Make sure we get 404 errors when the ID isn't found.
         response.status(500).send(error.message);
     }
 }
