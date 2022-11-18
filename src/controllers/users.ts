@@ -1,4 +1,3 @@
-import { setDefaultResultOrder } from 'dns';
 import express from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
