@@ -1,13 +1,25 @@
 import express from 'express';
+import { isValidObjectId } from 'mongoose';
+import { db } from '../models';
+const Question = db.questions;
 
 /////////
 // POST
 async function post(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['questions']
-    let doc: any = [];
+    let question: any = {};
+
     try {
-        // TODO: Create a new document
-        response.status(201).send(doc);
+         // Create a new document
+         const document = {
+            "postId": request.body.postId,
+            "content": request.body.content,
+            "comments": []
+        }
+
+        question = await Question.create(document);
+
+        response.status(201).send(document);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -49,7 +61,27 @@ async function getOne(request: express.Request, response: express.Response): Pro
 async function put(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['questions']
     try {
-        // TODO: Update the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
+
+        // TODO: check request.body.postId and request.body.comments for valid object IDs as well
+
+        // Update the document specified by the ID in request.params.id
+        const document = {
+            "postId": request.body.postId,
+            "content": request.body.content,
+            "comments": request.body.comments
+        }
+
+        const question = await Question.findByIdAndUpdate(id, {$set: document});
+        if (!question) {
+            response.status(404).send();
+            return;
+        }
+        
         response.status(204).send();
     }
     catch (error: any) {
@@ -63,7 +95,19 @@ async function put(request: express.Request, response: express.Response): Promis
 async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['questions']
     try {
-        // TODO: Delete the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
+
+        // Delete the document specified by the ID in request.params.id
+        const question = await Question.findByIdAndRemove(id);
+        if (!question) {
+            response.status(404).send();
+            return;
+        }
+
         response.send();
     }
     catch (error: any) {
