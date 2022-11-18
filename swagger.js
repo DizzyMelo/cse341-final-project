@@ -3,9 +3,10 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
     info: {
         title: 'The Socratic Method API',
-        description: 'CSE 341 Final Project',
+        description: 'CSE 341 Final Project — Team Sneaky Can',
         contact: {
-            name: "Ben Cornia, Eugene C. Olsen, Daniel De Melo"
+            name: "Ben Cornia, Eugene C. Olsen, Daniel De Melo",
+            url: "https://github.com/DizzyMelo/cse341-final-project"
         }
     },
     host: '',
@@ -15,7 +16,7 @@ const doc = {
     produces: ['application/json'],
     tags: [{
         "name": "The Socratic Method API",
-        "description": "CSE 341, Final Project"
+        "description": "Questions, Answers, and Comments à la StackOverflow"
     }],
     securityDefinitions: {
         Authorization: {
