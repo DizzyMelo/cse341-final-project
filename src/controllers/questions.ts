@@ -34,8 +34,10 @@ async function post(request: express.Request, response: express.Response): Promi
 async function getAll(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['questions']
     try {
-        // TODO: Get all documents from this collection
-        response.send();
+        // Get all documents from this collection
+        const questions = await Question.find();
+
+        response.send(questions);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -47,8 +49,20 @@ async function getAll(request: express.Request, response: express.Response): Pro
 async function getOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['questions']
     try {
-        // TODO: Get the document specified by the ID in request.params.id
-        response.send();
+        // Get the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!isValidObjectId(id)) {
+            response.status(400).send(`ID: ${id} is not a valid MongoDB ObjectID`);
+            return;
+        }
+
+        const question = await Question.findById(id);
+        if (!question) {
+            response.status(404).send();
+            return;
+        }
+        
+        response.send(question);
     }
     catch (error: any) {
         response.status(500).send(error.message);
