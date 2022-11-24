@@ -2,9 +2,10 @@
   "swagger": "2.0",
   "info": {
     "title": "The Socratic Method API",
-    "description": "CSE 341 Final Project",
+    "description": "CSE 341 Final Project — Team Sneaky Can",
     "contact": {
-      "name": "Ben Cornia, Eugene C. Olsen, Daniel De Melo"
+      "name": "Ben Cornia, Eugene C. Olsen, Daniel De Melo",
+      "url": "https://github.com/DizzyMelo/cse341-final-project"
     },
     "version": "1.0.0"
   },
@@ -13,7 +14,7 @@
   "tags": [
     {
       "name": "The Socratic Method API",
-      "description": "CSE 341, Final Project"
+      "description": "Questions, Answers, and Comments à la StackOverflow"
     }
   ],
   "schemes": [
@@ -77,13 +78,32 @@
         "responses": {}
       }
     },
-    "/questions/": {
+    "/posts/": {
       "post": {
         "tags": [
-          "questions"
+          "posts"
         ],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "question": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -95,7 +115,7 @@
       },
       "get": {
         "tags": [
-          "questions"
+          "posts"
         ],
         "description": "",
         "parameters": [],
@@ -109,10 +129,10 @@
         }
       }
     },
-    "/questions/{id}": {
+    "/posts/{id}": {
       "get": {
         "tags": [
-          "questions"
+          "posts"
         ],
         "description": "",
         "parameters": [
@@ -126,6 +146,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -134,7 +160,7 @@
       },
       "put": {
         "tags": [
-          "questions"
+          "posts"
         ],
         "description": "",
         "parameters": [
@@ -143,11 +169,38 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                },
+                "title": {
+                  "example": "any"
+                },
+                "question": {
+                  "example": "any"
+                },
+                "likes": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -156,7 +209,7 @@
       },
       "delete": {
         "tags": [
-          "questions"
+          "posts"
         ],
         "description": "",
         "parameters": [
@@ -170,6 +223,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -405,12 +464,6 @@
                 "permissions": {
                   "example": "any"
                 },
-                "questions": {
-                  "example": "any"
-                },
-                "answers": {
-                  "example": "any"
-                },
                 "likes": {
                   "example": "any"
                 }
@@ -503,12 +556,6 @@
                   "example": "any"
                 },
                 "permissions": {
-                  "example": "any"
-                },
-                "questions": {
-                  "example": "any"
-                },
-                "answers": {
                   "example": "any"
                 },
                 "likes": {

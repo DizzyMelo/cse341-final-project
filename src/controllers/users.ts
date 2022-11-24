@@ -1,4 +1,3 @@
-import { setDefaultResultOrder } from 'dns';
 import express from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
@@ -19,8 +18,6 @@ async function post(request: express.Request, response: express.Response): Promi
             "login": request.body.login,
             "email": request.body.email,
             "permissions": request.body.permissions,
-            "questions": request.body.questions,
-            "answers": request.body.answers,
             "likes": request.body.likes
         }
 
@@ -41,7 +38,7 @@ async function post(request: express.Request, response: express.Response): Promi
 async function getAll(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
-        // TODO: Get all documents from this collection
+        // Get all documents from this collection
         const users = await User.find();
 
         response.send(users);
@@ -95,8 +92,6 @@ async function put(request: express.Request, response: express.Response): Promis
             "login": request.body.login,
             "email": request.body.email,
             "permissions": request.body.permissions,
-            "questions": request.body.questions,
-            "answers": request.body.answers,
             "likes": request.body.likes
         }
 
