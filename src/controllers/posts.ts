@@ -92,7 +92,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "likes": request.body.likes
         }
 
-        const post = await Post.create(document);
+        const post = await Post.findByIdAndUpdate(id, {$set: document});
         if (!post) {
             response.status(404).send();
             return;
