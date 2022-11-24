@@ -1,7 +1,7 @@
 import express from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
-const Question = db.questions;
+const Post = db.posts;
 
 /////////
 // POST
@@ -10,14 +10,17 @@ async function post(request: express.Request, response: express.Response): Promi
     let question: any = {};
 
     try {
-         // Create a new document
-         const document = {
-            "postId": request.body.postId,
-            "content": request.body.content,
-            "comments": []
+        const now: Date = new Date();
+        // Create a new document
+        const document = {
+            "userId": request.body.userId,
+            "title": request.body.title,
+            "question": request.body.question,
+            "timestamp": now.toISOString,
+            "likes": 0
         }
 
-        question = await Question.create(document);
+        const post = await Post.create(document);
 
         response.status(201).send(document);
     }
@@ -81,17 +84,18 @@ async function put(request: express.Request, response: express.Response): Promis
             return;
         }
 
-        // TODO: check request.body.postId and request.body.comments for valid object IDs as well
-
-        // Update the document specified by the ID in request.params.id
+        const now: Date = new Date();
+        // Create a new document
         const document = {
-            "postId": request.body.postId,
-            "content": request.body.content,
-            "comments": request.body.comments
+            "userId": request.body.userId,
+            "title": request.body.title,
+            "question": request.body.question,
+            "timestamp": now.toISOString,
+            "likes": request.body.likes
         }
 
-        const question = await Question.findByIdAndUpdate(id, {$set: document});
-        if (!question) {
+        const post = await Post.create(document);
+        if (!post) {
             response.status(404).send();
             return;
         }
