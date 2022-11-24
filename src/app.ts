@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/authorization', require('./routes/auth'));
-app.use('/questions', require('./routes/questions'));
+app.use('/posts', require('./routes/posts'));
 app.use('/answers', require('./routes/answers'));
 app.use('/comments', require('./routes/comments'));
 app.use('/users', require('./routes/users'));

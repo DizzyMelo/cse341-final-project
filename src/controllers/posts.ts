@@ -1,27 +1,24 @@
 import express from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
-const User = db.users;
+const Post = db.posts;
 
 /////////
 // POST
 async function post(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['users']
-    let user: any = {};
-
+    // #swagger.tags = ['posts']
     try {
-        // TODO: Check the request.body.login to see if the login is already in use.
+        const now: Date = new Date();
         // Create a new document
         const document = {
-            "lastName": request.body.lastName,
-            "firstName": request.body.firstName,
-            "login": request.body.login,
-            "email": request.body.email,
-            "permissions": request.body.permissions,
-            "likes": request.body.likes
+            "userId": request.body.userId,
+            "title": request.body.title,
+            "question": request.body.question,
+            "timestamp": now.toISOString,
+            "likes": 0
         }
 
-        user = await User.create(document);
+        const post = await Post.create(document);
 
         response.status(201).send(document);
     }
@@ -34,14 +31,14 @@ async function post(request: express.Request, response: express.Response): Promi
 ////////
 // GET
 //
-// getAll returns all documents in the collection.
+// getAll returns all documents from the collection.
 async function getAll(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['users']
+    // #swagger.tags = ['posts']
     try {
         // Get all documents from this collection
-        const users = await User.find();
+        const questions = await Post.find();
 
-        response.send(users);
+        response.send(questions);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -51,7 +48,7 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
 // getOne returns one document specified by the ID parameter
 async function getOne(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['users']
+    // #swagger.tags = ['posts']
     try {
         // Get the document specified by the ID in request.params.id
         const id = request.params.id;
@@ -60,13 +57,13 @@ async function getOne(request: express.Request, response: express.Response): Pro
             return;
         }
 
-        const user = await User.findById(id);
-        if (!user) {
+        const question = await Post.findById(id);
+        if (!question) {
             response.status(404).send();
             return;
         }
         
-        response.send(user);
+        response.send(question);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -77,7 +74,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['users']
+    // #swagger.tags = ['posts']
     try {
         const id = request.params.id;
         if (!isValidObjectId(id)) {
@@ -85,18 +82,18 @@ async function put(request: express.Request, response: express.Response): Promis
             return;
         }
 
-        // Update the document specified by the ID in request.params.id
+        const now: Date = new Date();
+        // Create a new document
         const document = {
-            "lastName": request.body.lastName,
-            "firstName": request.body.firstName,
-            "login": request.body.login,
-            "email": request.body.email,
-            "permissions": request.body.permissions,
+            "userId": request.body.userId,
+            "title": request.body.title,
+            "question": request.body.question,
+            "timestamp": now.toISOString,
             "likes": request.body.likes
         }
 
-        const user = await User.findByIdAndUpdate(id, {$set: document});
-        if (!user) {
+        const post = await Post.create(document);
+        if (!post) {
             response.status(404).send();
             return;
         }
@@ -112,7 +109,7 @@ async function put(request: express.Request, response: express.Response): Promis
 ///////////
 // DELETE 
 async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['users']
+    // #swagger.tags = ['posts']
     try {
         const id = request.params.id;
         if (!isValidObjectId(id)) {
@@ -121,8 +118,8 @@ async function deleteOne(request: express.Request, response: express.Response): 
         }
 
         // Delete the document specified by the ID in request.params.id
-        const user = await User.findByIdAndRemove(id);
-        if (!user) {
+        const post = await Post.findByIdAndRemove(id);
+        if (!post) {
             response.status(404).send();
             return;
         }
