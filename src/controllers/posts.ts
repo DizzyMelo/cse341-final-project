@@ -6,9 +6,7 @@ const Post = db.posts;
 /////////
 // POST
 async function post(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['questions']
-    let question: any = {};
-
+    // #swagger.tags = ['posts']
     try {
         const now: Date = new Date();
         // Create a new document
@@ -35,10 +33,10 @@ async function post(request: express.Request, response: express.Response): Promi
 //
 // getAll returns all documents from the collection.
 async function getAll(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['questions']
+    // #swagger.tags = ['posts']
     try {
         // Get all documents from this collection
-        const questions = await Question.find();
+        const questions = await Post.find();
 
         response.send(questions);
     }
@@ -50,7 +48,7 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
 // getOne returns one document specified by the ID parameter
 async function getOne(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['questions']
+    // #swagger.tags = ['posts']
     try {
         // Get the document specified by the ID in request.params.id
         const id = request.params.id;
@@ -59,7 +57,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
             return;
         }
 
-        const question = await Question.findById(id);
+        const question = await Post.findById(id);
         if (!question) {
             response.status(404).send();
             return;
@@ -76,7 +74,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['questions']
+    // #swagger.tags = ['posts']
     try {
         const id = request.params.id;
         if (!isValidObjectId(id)) {
@@ -111,7 +109,7 @@ async function put(request: express.Request, response: express.Response): Promis
 ///////////
 // DELETE 
 async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['questions']
+    // #swagger.tags = ['posts']
     try {
         const id = request.params.id;
         if (!isValidObjectId(id)) {
@@ -120,8 +118,8 @@ async function deleteOne(request: express.Request, response: express.Response): 
         }
 
         // Delete the document specified by the ID in request.params.id
-        const question = await Question.findByIdAndRemove(id);
-        if (!question) {
+        const post = await Post.findByIdAndRemove(id);
+        if (!post) {
             response.status(404).send();
             return;
         }
