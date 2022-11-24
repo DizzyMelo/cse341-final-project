@@ -1,13 +1,31 @@
 import express from 'express';
+import { validId } from '../common/utilities';
+import { db } from '../models';
+const Comment = db.comments;
+
 
 /////////
 // POST
 async function post(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
-    let doc: any = [];
     try {
-        // TODO: Create a new document
-        response.status(201).send(doc);
+        if (!validId(request.body.userId, "User", response)) { return; }
+
+        if (!validId(request.body.parent, "Parent", response)) { return; }
+
+        const now: Date = new Date();
+        // Create a new document
+        const document = {
+            "userId": request.body.userId,
+            "content": request.body.content,
+            "parent": request.body.parent,
+            "timestamp": now.toISOString,
+            "likes": 0
+        }
+
+        const comment = await Comment.create(document);
+
+        response.status(201).send(document);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -18,12 +36,14 @@ async function post(request: express.Request, response: express.Response): Promi
 ////////
 // GET
 //
-// getAll returns all documents in the collection.
+// getAll returns all documents from the collection.
 async function getAll(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
-        // TODO: Get all documents from this collection
-        response.send();
+        // Get all documents from this collection
+        const comments = await Comment.find();
+
+        response.send(comments);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -35,8 +55,17 @@ async function getAll(request: express.Request, response: express.Response): Pro
 async function getOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
-        // TODO: Get the document specified by the ID in request.params.id
-        response.send();
+        // Get the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!validId(id, "", response)) { return; }
+
+        const comment = await Comment.findById(id);
+        if (!comment) {
+            response.status(404).send();
+            return;
+        }
+        
+        response.send(comment);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -49,7 +78,30 @@ async function getOne(request: express.Request, response: express.Response): Pro
 async function put(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
-        // TODO: Update the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!validId(id, "", response)) { return; }
+
+        if (!validId(request.body.userId, "User", response)) { return; }
+
+        if (!validId(request.body.parent, "Parent", response)) { return; }
+
+
+        const now: Date = new Date();
+        // Create a new document
+        const document = {
+            "userId": request.body.userId,
+            "content": request.body.content,
+            "parent": request.body.parent,
+            "timestamp": now.toISOString,
+            "likes": request.body.likes
+        }
+
+        const comment = await Comment.findByIdAndUpdate(id, {$set: document});
+        if (!comment) {
+            response.status(404).send();
+            return;
+        }
+        
         response.status(204).send();
     }
     catch (error: any) {
@@ -63,7 +115,16 @@ async function put(request: express.Request, response: express.Response): Promis
 async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
-        // TODO: Delete the document specified by the ID in request.params.id
+        const id = request.params.id;
+        if (!validId(id, "", response)) { return; }
+
+        // Delete the document specified by the ID in request.params.id
+        const comment = await Comment.findByIdAndRemove(id);
+        if (!comment) {
+            response.status(404).send();
+            return;
+        }
+
         response.send();
     }
     catch (error: any) {
