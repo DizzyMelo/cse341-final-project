@@ -5,6 +5,7 @@ interface IUser {
     firstName: string;
     login: string;
     email: string;
+    organization: string;
     permissions: any[];
     likes: number;
 }
@@ -14,6 +15,7 @@ const userSchema = new Schema<IUser>({
     firstName: { type: String, required: true },
     login: { type: String, required: true },
     email:  { type: String, required: true },
+    organization: { type: String },
     permissions: [{ type: Schema.Types.Mixed, required: true}],
     likes: { type: Number }
 });
