@@ -72,6 +72,12 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+// getAnswersForPost returns all answers for a given post, specified by the ID parameter
+async function getAnswersForPost(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['answers']
+    response.status(501).send();    // Not Implemented
+}
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -135,6 +141,7 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getAnswersForPost,
     put,
     deleteOne
 }
