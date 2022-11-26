@@ -74,6 +74,20 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+// getUserByEmail returns a User document according to the email address field specified by the ID parameter
+async function getUserByEmail(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['users']
+    response.status(501).send({ "error": "501 Not Implemented" });
+}
+
+
+// getUserByLogin returns a User document according to Login ID specified by the ID parameter
+async function getUserByLogin(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['users']
+    response.status(501).send({ "error": "501 Not Implemented" });
+}
+
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -138,6 +152,8 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getUserByEmail,
+    getUserByLogin,
     put,
     deleteOne
 }
