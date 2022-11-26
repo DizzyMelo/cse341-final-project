@@ -73,6 +73,20 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+// getCommentsForPost returns an array of comments for a specified Post ID parameter.
+async function getCommentsForPost(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['comments']
+    response.status(501).send();    // Not Implemented
+}
+
+
+// getCommentsForAnswer returns an array of comments for a specified Answer ID parameter.
+async function getCommentsForAnswer(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['comments']
+    response.status(501).send();    // Not Implemented
+}
+
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -136,6 +150,8 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getCommentsForAnswer,
+    getCommentsForPost,
     put,
     deleteOne
 }
