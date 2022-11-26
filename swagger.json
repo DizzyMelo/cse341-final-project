@@ -564,9 +564,6 @@
                 },
                 "permissions": {
                   "example": "any"
-                },
-                "likes": {
-                  "example": "any"
                 }
               }
             }
@@ -660,6 +657,9 @@
                   "example": "any"
                 },
                 "permissions": {
+                  "example": "any"
+                },
+                "created": {
                   "example": "any"
                 },
                 "likes": {
