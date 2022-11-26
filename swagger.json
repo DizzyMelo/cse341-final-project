@@ -559,6 +559,9 @@
                 "email": {
                   "example": "any"
                 },
+                "organization": {
+                  "example": "any"
+                },
                 "permissions": {
                   "example": "any"
                 },
@@ -651,6 +654,9 @@
                   "example": "any"
                 },
                 "email": {
+                  "example": "any"
+                },
+                "organization": {
                   "example": "any"
                 },
                 "permissions": {
