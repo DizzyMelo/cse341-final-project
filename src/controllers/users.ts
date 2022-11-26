@@ -17,6 +17,7 @@ async function post(request: express.Request, response: express.Response): Promi
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
             "likes": request.body.likes
         }
@@ -91,6 +92,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
             "likes": request.body.likes
         }
