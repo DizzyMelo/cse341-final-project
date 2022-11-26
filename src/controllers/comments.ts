@@ -19,7 +19,7 @@ async function post(request: express.Request, response: express.Response): Promi
             "userId": request.body.userId,
             "content": request.body.content,
             "parent": request.body.parent,
-            "timestamp": now.toISOString,
+            "timestamp": now.toISOString(),
             "likes": 0
         }
 
@@ -106,7 +106,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "userId": request.body.userId,
             "content": request.body.content,
             "parent": request.body.parent,
-            "timestamp": now.toISOString,
+            "timestamp": now.toISOString(),
             "likes": request.body.likes
         }
 
