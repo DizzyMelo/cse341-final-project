@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
 const Comment = db.comments;
@@ -73,17 +74,22 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
-// getCommentsForPost returns an array of comments for a specified Post ID parameter.
-async function getCommentsForPost(request: express.Request, response: express.Response): Promise<void> {
-    // #swagger.tags = ['comments']
-    response.status(501).send();    // Not Implemented
-}
 
-
-// getCommentsForAnswer returns an array of comments for a specified Answer ID parameter.
-async function getCommentsForAnswer(request: express.Request, response: express.Response): Promise<void> {
+// getComments returns an array of comments for a specified Answer ID or Post ID parameter.
+async function getComments(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['comments']
-    response.status(501).send();    // Not Implemented
+    const id =  request.params.id;
+
+    if (!validId(id, "Answer", response)) { return; }
+
+    const comments = await Comment.find({ parent: new ObjectId(id) });
+
+    if (!comments || comments.length === 0) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(comments);
 }
 
 
@@ -150,8 +156,7 @@ module.exports = {
     post,
     getAll,
     getOne,
-    getCommentsForAnswer,
-    getCommentsForPost,
+    getComments,
     put,
     deleteOne
 }
