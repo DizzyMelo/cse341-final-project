@@ -3,7 +3,7 @@ import { Schema, Types, model } from 'mongoose';
 interface IComment {
     userId: Types.ObjectId;
     content: string;
-    parent: Types.ObjectId;
+    parent: Types.ObjectId;     // Post ID or Answer ID
     timestamp: string;  // Date/Time in ISO 8601 format
     likes: number;
 }
