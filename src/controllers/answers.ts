@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
 const Answer = db.answers;
@@ -75,7 +76,18 @@ async function getOne(request: express.Request, response: express.Response): Pro
 // getAnswersForPost returns all answers for a given post, specified by the ID parameter
 async function getAnswersForPost(request: express.Request, response: express.Response): Promise<void> {
     // #swagger.tags = ['answers']
-    response.status(501).send();    // Not Implemented
+    const id =  request.params.id;
+
+    if (!validId(id, "Post", response)) { return; }
+
+    const answers = await Answer.find({ postId: new ObjectId(id) });
+
+    if (!answers || answers.length === 0) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(answers);
 }
 
 ////////
