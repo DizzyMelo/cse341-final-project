@@ -22,7 +22,6 @@ async function post(request: express.Request, response: express.Response): Promi
             "email": request.body.email,
             "organization": request.body.organization,
             "permissions": request.body.permissions,
-            "created": now.toISOString(),
             "updated": now.toISOString(),
             "likes": 0
         }
@@ -133,7 +132,6 @@ async function put(request: express.Request, response: express.Response): Promis
             "email": request.body.email,
             "organization": request.body.organization,
             "permissions": request.body.permissions,
-            "created": request.body.created,
             "updated": now.toISOString(),
             "likes": request.body.likes
         }
