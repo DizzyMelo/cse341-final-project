@@ -20,7 +20,7 @@ async function post(request: express.Request, response: express.Response): Promi
 
         const post = await Post.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(post);
     }
     catch (error: any) {
         response.status(500).send(error.message);

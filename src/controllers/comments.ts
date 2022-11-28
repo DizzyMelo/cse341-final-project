@@ -26,7 +26,7 @@ async function post(request: express.Request, response: express.Response): Promi
 
         const comment = await Comment.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(comment);
     }
     catch (error: any) {
         response.status(500).send(error.message);
