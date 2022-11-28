@@ -19,6 +19,7 @@
   "author": "Ben Cornia",
   "license": "ISC",
   "devDependencies": {
+    "@jest-mock/express": "^2.0.1",
     "@types/ejs": "^3.1.1",
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.3",
