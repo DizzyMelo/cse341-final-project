@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
 const Answer = db.answers;
@@ -18,7 +19,7 @@ async function post(request: express.Request, response: express.Response): Promi
             "postId": request.body.postId,
             "userId": request.body.userId,
             "content": request.body.content,
-            "timestamp": now.toISOString,
+            "timestamp": now.toISOString(),
             "likes": 0
         }
 
@@ -72,6 +73,23 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+// getAnswersForPost returns all answers for a given post, specified by the ID parameter
+async function getAnswersForPost(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['answers']
+    const id =  request.params.id;
+
+    if (!validId(id, "Post", response)) { return; }
+
+    const answers = await Answer.find({ postId: new ObjectId(id) });
+
+    if (!answers || answers.length === 0) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(answers);
+}
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -91,7 +109,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "postId": request.body.postId,
             "userId": request.body.userId,
             "content": request.body.content,
-            "timestamp": now.toISOString,
+            "timestamp": now.toISOString(),
             "likes": request.body.likes
         }
 
@@ -135,6 +153,7 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getAnswersForPost,
     put,
     deleteOne
 }
