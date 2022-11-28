@@ -622,10 +622,10 @@
                 "email": {
                   "example": "any"
                 },
-                "permissions": {
+                "organization": {
                   "example": "any"
                 },
-                "likes": {
+                "permissions": {
                   "example": "any"
                 }
               }
@@ -716,7 +716,13 @@
                 "email": {
                   "example": "any"
                 },
+                "organization": {
+                  "example": "any"
+                },
                 "permissions": {
+                  "example": "any"
+                },
+                "created": {
                   "example": "any"
                 },
                 "likes": {

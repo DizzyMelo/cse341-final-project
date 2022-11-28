@@ -11,19 +11,25 @@ async function post(request: express.Request, response: express.Response): Promi
 
     try {
         // TODO: Check the request.body.login to see if the login is already in use.
+
+        const now: Date = new Date();
+
         // Create a new document
         const document = {
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
-            "likes": request.body.likes
+            "created": now.toISOString(),
+            "updated": now.toISOString(),
+            "likes": 0
         }
 
         user = await User.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(user);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -117,13 +123,18 @@ async function put(request: express.Request, response: express.Response): Promis
             return;
         }
 
+        const now: Date = new Date();
+
         // Update the document specified by the ID in request.params.id
         const document = {
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
+            "created": request.body.created,
+            "updated": now.toISOString(),
             "likes": request.body.likes
         }
 
