@@ -19,13 +19,13 @@ async function post(request: express.Request, response: express.Response): Promi
             "postId": request.body.postId,
             "userId": request.body.userId,
             "content": request.body.content,
-            "timestamp": now.toISOString(),
+            "updated": now.toISOString(),
             "likes": 0
         }
 
         const answer = await Answer.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(answer);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -109,7 +109,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "postId": request.body.postId,
             "userId": request.body.userId,
             "content": request.body.content,
-            "timestamp": now.toISOString(),
+            "updated": now.toISOString(),
             "likes": request.body.likes
         }
 

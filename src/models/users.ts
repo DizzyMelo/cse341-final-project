@@ -1,5 +1,6 @@
 import { Schema, Types, model } from 'mongoose';
 
+// Note that the created timestamp is incorporated into the MongoDB ObjectId and can be extracted.
 interface IUser {
     lastName: string;
     firstName: string;
@@ -7,7 +8,6 @@ interface IUser {
     email: string;
     organization: string;
     permissions: any[];
-    created: string;    // Timestamp in ISO 8601 format
     updated: string;    // Timestamp in ISO 8601 format
     likes: number;
 }
@@ -19,7 +19,6 @@ const userSchema = new Schema<IUser>({
     email:  { type: String, required: true },
     organization: { type: String },
     permissions: [{ type: Schema.Types.Mixed, required: true}],
-    created: { type: String },
     updated: { type: String },
     likes: { type: Number }
 });
