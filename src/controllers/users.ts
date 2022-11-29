@@ -11,19 +11,24 @@ async function post(request: express.Request, response: express.Response): Promi
 
     try {
         // TODO: Check the request.body.login to see if the login is already in use.
+
+        const now: Date = new Date();
+
         // Create a new document
         const document = {
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
-            "likes": request.body.likes
+            "updated": now.toISOString(),
+            "likes": 0
         }
 
         user = await User.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(user);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -74,6 +79,38 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+// getUserByEmail returns a User document according to the email address field specified by the ID parameter
+async function getUserByEmail(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['users']
+    const id =  request.params.id;
+
+    const user = await User.findOne({ email: id });
+
+    if (!user) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(user);
+}
+
+
+// getUserByLogin returns a User document according to Login ID specified by the ID parameter
+async function getUserByLogin(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['users']
+    const id =  request.params.id;
+
+    const user = await User.findOne({ login: id });
+
+    if (!user) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(user);
+}
+
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -85,13 +122,17 @@ async function put(request: express.Request, response: express.Response): Promis
             return;
         }
 
+        const now: Date = new Date();
+
         // Update the document specified by the ID in request.params.id
         const document = {
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
             "email": request.body.email,
+            "organization": request.body.organization,
             "permissions": request.body.permissions,
+            "updated": now.toISOString(),
             "likes": request.body.likes
         }
 
@@ -138,6 +179,8 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getUserByEmail,
+    getUserByLogin,
     put,
     deleteOne
 }

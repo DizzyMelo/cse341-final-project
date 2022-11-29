@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
 const Comment = db.comments;
@@ -19,13 +20,13 @@ async function post(request: express.Request, response: express.Response): Promi
             "userId": request.body.userId,
             "content": request.body.content,
             "parent": request.body.parent,
-            "timestamp": now.toISOString,
+            "updated": now.toISOString(),
             "likes": 0
         }
 
         const comment = await Comment.create(document);
 
-        response.status(201).send(document);
+        response.status(201).send(comment);
     }
     catch (error: any) {
         response.status(500).send(error.message);
@@ -73,6 +74,25 @@ async function getOne(request: express.Request, response: express.Response): Pro
 }
 
 
+
+// getComments returns an array of comments for a specified Answer ID or Post ID parameter.
+async function getComments(request: express.Request, response: express.Response): Promise<void> {
+    // #swagger.tags = ['comments']
+    const id =  request.params.id;
+
+    if (!validId(id, "Answer", response)) { return; }
+
+    const comments = await Comment.find({ parent: new ObjectId(id) });
+
+    if (!comments || comments.length === 0) {
+        response.status(404).send();
+        return;
+    }
+
+    response.send(comments);
+}
+
+
 ////////
 // PUT
 async function put(request: express.Request, response: express.Response): Promise<void> {
@@ -92,7 +112,7 @@ async function put(request: express.Request, response: express.Response): Promis
             "userId": request.body.userId,
             "content": request.body.content,
             "parent": request.body.parent,
-            "timestamp": now.toISOString,
+            "updated": now.toISOString(),
             "likes": request.body.likes
         }
 
@@ -136,6 +156,7 @@ module.exports = {
     post,
     getAll,
     getOne,
+    getComments,
     put,
     deleteOne
 }
