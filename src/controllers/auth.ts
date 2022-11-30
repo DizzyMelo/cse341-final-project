@@ -24,6 +24,10 @@ const AuthController = {
     callback: async (request: express.Request, response: express.Response, next: any) => {
       // #swagger.tags = ['authorization']
       
+      console.log(appConfig.authorizationHost);
+      console.log(appConfig.clientId);
+      console.log(appConfig.clientSecret);
+      console.log(appConfig.redirectUrl);
       const res = await fetch(`${appConfig.authorizationHost}/oauth/token`, {
         method: 'POST',
         headers: {
@@ -40,7 +44,7 @@ const AuthController = {
       });
     
       const jsonResponse = await res.json();
-      response.json(jsonResponse);
+      response.send(jsonResponse.access_token);
     },
   };
   
