@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import 'dotenv/config';
 import express from 'express';
 const app: express.Application = express();
