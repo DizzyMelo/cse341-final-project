@@ -31,7 +31,7 @@ async function post(request: Request, response: Response): Promise<void> {
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -50,7 +50,7 @@ async function getAll(request: Request, response: Response): Promise<void> {
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -76,7 +76,7 @@ async function getOne(request: Request, response: Response): Promise<void> {
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -148,7 +148,7 @@ async function put(request: Request, response: Response): Promise<void> {
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -175,7 +175,7 @@ async function deleteOne(request: Request, response: Response): Promise<void> {
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 

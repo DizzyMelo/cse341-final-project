@@ -30,7 +30,7 @@ async function post(request: express.Request, response: express.Response): Promi
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -49,7 +49,7 @@ async function getAll(request: express.Request, response: express.Response): Pro
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -72,7 +72,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -129,7 +129,7 @@ async function put(request: express.Request, response: express.Response): Promis
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
@@ -153,7 +153,7 @@ async function deleteOne(request: express.Request, response: express.Response): 
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
-        else console.log('Unexpected Error:', error)
+        else response.status(500).send(error);
     }
 }
 
