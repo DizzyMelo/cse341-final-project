@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import { auth } from 'express-openid-connect';
 const app: express.Application = express();
 
 import * as swaggerUI from 'swagger-ui-express';
@@ -10,17 +9,6 @@ import mongoose from 'mongoose';
 import { db } from './models';
 
 const port = process.env.PORT || 3000;
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: process.env.BASE_URL,
-  clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.ISSUER_BASE_URL
-};
-
-app.use(auth(config));
 
 app.use(express.json());        // With Express 4.16 and later, we no longer need body-parser.  Express does it.
 app.use(express.urlencoded({ extended: true }));  // Must use extended option
