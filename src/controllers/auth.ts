@@ -1,8 +1,8 @@
-import express from 'express';
+import {Request, Response, NextFunction} from 'express';
 import appConfig from '../config/app';
 
 const AuthController = {
-    login: (request: express.Request, response: express.Response) => {
+    login: (request: Request, response: Response) => {
       // #swagger.tags = ['authorization']
       
       const authorizationURL = `${
@@ -17,7 +17,7 @@ const AuthController = {
       
     },
 
-    logout: async (request: express.Request, response: express.Response) => {
+    logout: async (request: Request, response: Response) => {
       // #swagger.tags = ['authorization']
       const logoutUrl = `${
         appConfig.authorizationHost
@@ -28,7 +28,7 @@ const AuthController = {
       response.redirect(logoutUrl);
     },
   
-    callback: async (request: express.Request, response: express.Response, next: any) => {
+    callback: async (request: Request, response: Response, next: NextFunction) => {
       // #swagger.tags = ['authorization']
       
       const res = await fetch(`${appConfig.authorizationHost}/oauth/token`, {
@@ -48,6 +48,8 @@ const AuthController = {
     
       const jsonResponse = await res.json();
       response.send(jsonResponse.access_token);
+      
+      next();
     },
   };
   

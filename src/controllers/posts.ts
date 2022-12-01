@@ -1,11 +1,11 @@
-import express from 'express';
+import {Request, Response} from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
 const Post = db.posts;
 
 /////////
 // POST
-async function post(request: express.Request, response: express.Response): Promise<void> {
+async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         const now: Date = new Date();
@@ -33,7 +33,7 @@ async function post(request: express.Request, response: express.Response): Promi
 // GET
 //
 // getAll returns all documents from the collection.
-async function getAll(request: express.Request, response: express.Response): Promise<void> {
+async function getAll(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         // Get all documents from this collection
@@ -49,7 +49,7 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
 
 // getOne returns one document specified by the ID parameter
-async function getOne(request: express.Request, response: express.Response): Promise<void> {
+async function getOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         // Get the document specified by the ID in request.params.id
@@ -76,7 +76,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
 
 ////////
 // PUT
-async function put(request: express.Request, response: express.Response): Promise<void> {
+async function put(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         const id = request.params.id;
@@ -112,7 +112,7 @@ async function put(request: express.Request, response: express.Response): Promis
 
 ///////////
 // DELETE 
-async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
+async function deleteOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         const id = request.params.id;

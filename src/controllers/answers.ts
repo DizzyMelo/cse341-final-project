@@ -1,4 +1,4 @@
-import express from 'express';
+import {Request, Response} from 'express';
 import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
@@ -6,7 +6,7 @@ const Answer = db.answers;
 
 /////////
 // POST
-async function post(request: express.Request, response: express.Response): Promise<void> {
+async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     try {
         if (!validId(request.body.postId, "Post", response)) { return; }
@@ -38,7 +38,7 @@ async function post(request: express.Request, response: express.Response): Promi
 // GET
 //
 // getAll returns all documents from the collection.
-async function getAll(request: express.Request, response: express.Response): Promise<void> {
+async function getAll(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     try {
         // Get all documents from this collection
@@ -54,7 +54,7 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
 
 // getOne returns one document specified by the ID parameter
-async function getOne(request: express.Request, response: express.Response): Promise<void> {
+async function getOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     try {
         // Get the document specified by the ID in request.params.id
@@ -77,7 +77,7 @@ async function getOne(request: express.Request, response: express.Response): Pro
 
 
 // getAnswersForPost returns all answers for a given post, specified by the ID parameter
-async function getAnswersForPost(request: express.Request, response: express.Response): Promise<void> {
+async function getAnswersForPost(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     const id =  request.params.id;
 
@@ -95,7 +95,7 @@ async function getAnswersForPost(request: express.Request, response: express.Res
 
 ////////
 // PUT
-async function put(request: express.Request, response: express.Response): Promise<void> {
+async function put(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     try {
         const id = request.params.id;
@@ -133,7 +133,7 @@ async function put(request: express.Request, response: express.Response): Promis
 
 ///////////
 // DELETE 
-async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
+async function deleteOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['answers']
     try {
         const id = request.params.id;
