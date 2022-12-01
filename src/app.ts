@@ -4,7 +4,7 @@ import { auth } from 'express-openid-connect';
 const app: express.Application = express();
 
 import * as swaggerUI from 'swagger-ui-express';
-const swaggerDocument = require('../swagger.json')
+import * as swaggerDocument from './swagger.json';
 
 import mongoose from 'mongoose';
 import { db } from './models';

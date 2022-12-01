@@ -9,7 +9,9 @@
     "dev": "nodemon",
     "build": "npm install -f && npm run clean && tsc && npm run copy",
     "clean": "shx rm -rf dist",
-    "copy": "shx cp -r src/public dist"
+    "copy": "shx cp -r src/public dist",
+    "lint": "eslint . --ext .ts",
+    "gen-doc": "ts-node src/swagger.ts"
   },
   "keywords": [
     "CSE-341",
