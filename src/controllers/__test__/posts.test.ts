@@ -48,7 +48,7 @@ describe("Get all posts", () => {
       expect(response.status).toBe(200);
       expect(response.body.length).toBeGreaterThan(0);
       let index: number = Math.floor(Math.random() * (response.body.length - 1));
-      id = response.body[index]._id;  // Save the ID of the first user
+      id = response.body[index]._id;  // Save the ID of a random post
       expect(mongoose.isValidObjectId(id)).toBe(true);
     });
   });
