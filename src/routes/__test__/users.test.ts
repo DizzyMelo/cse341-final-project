@@ -23,8 +23,8 @@ db.mongoose.connect(db.url as string, {
   });
 });
 
-afterAll(() => {
-    connection.disconnect();
+afterAll( async () => {
+    await connection.disconnect();
 });
   
 beforeEach(() => {
