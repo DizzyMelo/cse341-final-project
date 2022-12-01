@@ -15,7 +15,6 @@ db.mongoose.connect(db.url as string, {
     useUnifiedTopology: true,
   } as mongoose.ConnectOptions)
   .then((value: typeof mongoose) => { 
-    //console.log('Connected to the Socrates database.')
     connection = value;
   })
   .catch((error: any) => {
@@ -45,6 +44,7 @@ describe("Get all users", () => {
     const response = await request(server).get("/users");
     //console.log(response.body);
     //expect(response.body).toEqual({ foo: "changed" });
+    expect(response.status).toBe(200);
     expect(response.body).toBeTruthy();
     expect(response.body.length).toBeGreaterThan(0);
     id = response.body[0]._id;
@@ -55,6 +55,7 @@ describe("Get all users", () => {
 describe("Get one user", () => {
     test("Get one user", async () => {
         const response = await request(server).get(`/users/${id.toString()}`);
+        expect(response.status).toBe(200);
         expect(response.body).toBeTruthy();
         expect(response.body._id).toBe(id);
     });
