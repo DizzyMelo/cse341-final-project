@@ -1,4 +1,4 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 // Note that the created timestamp is incorporated into the MongoDB ObjectId and can be extracted.
 interface IUser {

@@ -30,8 +30,9 @@ async function post(request: express.Request, response: express.Response): Promi
 
         response.status(201).send(user);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else console.log('Unexpected Error:', error)
     }
 }
 
@@ -48,8 +49,9 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
         response.send(users);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else console.log('Unexpected Error:', error)
     }
 }
 
@@ -73,8 +75,9 @@ async function getOne(request: express.Request, response: express.Response): Pro
         
         response.send(user);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else console.log('Unexpected Error:', error)
     }
 }
 
@@ -144,8 +147,9 @@ async function put(request: express.Request, response: express.Response): Promis
         
         response.status(204).send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else console.log('Unexpected Error:', error)
     }
 }
 
@@ -170,12 +174,13 @@ async function deleteOne(request: express.Request, response: express.Response): 
 
         response.send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else console.log('Unexpected Error:', error)
     }
 }
 
-module.exports = {
+export default {
     post,
     getAll,
     getOne,

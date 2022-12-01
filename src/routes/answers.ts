@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-const controller = require('../controllers/answers');
+import controller from '../controllers/answers';
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);
