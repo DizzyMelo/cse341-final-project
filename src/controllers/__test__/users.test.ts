@@ -47,7 +47,8 @@ describe("Get all users", () => {
     const response = await request(server).get("/users");
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
-    id = response.body[0]._id;  // Save the ID of the first user
+    let index: number = Math.floor(Math.random() * (response.body.length - 1));
+    id = response.body[index]._id;  // Save the ID of the first user
     expect(mongoose.isValidObjectId(id)).toBe(true);
   });
 });
