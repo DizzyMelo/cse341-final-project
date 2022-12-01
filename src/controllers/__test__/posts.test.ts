@@ -29,7 +29,7 @@ afterAll( async () => {
   
 beforeEach(() => {
   const app = express();
-  app.use('/users', require('../../routes/users'));
+  app.use('/posts', require('../../routes/posts'));
   server = app.listen();
 });
 
@@ -42,32 +42,28 @@ let id: mongoose.ObjectId;
 
 // Tests
 
-describe("Get all users", () => {
-  test("Get all users", async () => {
-    const response = await request(server).get("/users");
-    expect(response.status).toBe(200);
-    expect(response.body.length).toBeGreaterThan(0);
-    let index: number = Math.floor(Math.random() * (response.body.length - 1));
-    id = response.body[index]._id;  // Save the ID of a random user
-    expect(mongoose.isValidObjectId(id)).toBe(true);
+describe("Get all posts", () => {
+    test("Get all posts", async () => {
+      const response = await request(server).get("/posts");
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBeGreaterThan(0);
+      let index: number = Math.floor(Math.random() * (response.body.length - 1));
+      id = response.body[index]._id;  // Save the ID of a random post
+      expect(mongoose.isValidObjectId(id)).toBe(true);
+    });
   });
-});
-
-describe("Get one user", () => {
-    test("Get one user", async () => {
-        const response = await request(server).get(`/users/${id.toString()}`);
+  
+  describe("Get one post", () => {
+    test("Get one post", async () => {
+        const response = await request(server).get(`/posts/${id.toString()}`);
         expect(response.status).toBe(200);
         expect(Object.keys(response.body).length).toBeGreaterThan(0); // Response body must not be empty
         expect(response.body.hasOwnProperty('_id')).toBe(true);
         expect(response.body._id).toBe(id);
-        expect(response.body.hasOwnProperty('lastName')).toBe(true);
-        expect(response.body.hasOwnProperty('firstName')).toBe(true);
-        expect(response.body.hasOwnProperty('login')).toBe(true);
-        expect(response.body.hasOwnProperty('email')).toBe(true);
-        expect(response.body.hasOwnProperty('organization')).toBe(true);
-        expect(response.body.hasOwnProperty('permissions')).toBe(true);
-        expect(response.body['permissions'].length).toBeGreaterThan(0);
-        expect(response.body.hasOwnProperty('updated')).toBe(true);
+        expect(response.body.hasOwnProperty('userId')).toBe(true);
+        expect(mongoose.isValidObjectId(response.body.userId)).toBe(true);
+        expect(response.body.hasOwnProperty('question')).toBe(true);
+        expect(response.body.question.length).toBeGreaterThan(0);
         expect(response.body.hasOwnProperty('likes')).toBe(true);
     });
 });
