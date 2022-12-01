@@ -8,7 +8,7 @@ import { db } from '../../models';
 let server: Server;
 let connection: typeof mongoose;    // Mongoose connection
 
-// TODO: Set up Mockingoose mocks
+// Setup and Tear-down
 beforeAll(() => {
 db.mongoose.connect(db.url as string, {
     useNewUrlParser: true,
@@ -29,7 +29,7 @@ afterAll( async () => {
   
 beforeEach(() => {
   const app = express();
-  app.use('/users', require('../users'));
+  app.use('/users', require('../../routes/users'));
   server = app.listen();
 });
 
@@ -39,15 +39,15 @@ afterEach(() => {
 
 let id: mongoose.ObjectId;
 
+
+// Tests
+
 describe("Get all users", () => {
   test("Get all users", async () => {
     const response = await request(server).get("/users");
-    //console.log(response.body);
-    //expect(response.body).toEqual({ foo: "changed" });
     expect(response.status).toBe(200);
-    expect(response.body).toBeTruthy();
     expect(response.body.length).toBeGreaterThan(0);
-    id = response.body[0]._id;
+    id = response.body[0]._id;  // Save the ID of the first user
     expect(mongoose.isValidObjectId(id)).toBe(true);
   });
 });
@@ -56,8 +56,17 @@ describe("Get one user", () => {
     test("Get one user", async () => {
         const response = await request(server).get(`/users/${id.toString()}`);
         expect(response.status).toBe(200);
-        expect(response.body).toBeTruthy();
+        expect(Object.keys(response.body).length).toBeGreaterThan(0); // Response body must not be empty
+        expect(response.body.hasOwnProperty('_id')).toBe(true);
         expect(response.body._id).toBe(id);
+        expect(response.body.hasOwnProperty('lastName')).toBe(true);
+        expect(response.body.hasOwnProperty('firstName')).toBe(true);
+        expect(response.body.hasOwnProperty('login')).toBe(true);
+        expect(response.body.hasOwnProperty('email')).toBe(true);
+        expect(response.body.hasOwnProperty('organization')).toBe(true);
+        expect(response.body.hasOwnProperty('permissions')).toBe(true);
+        expect(response.body['permissions'].length).toBeGreaterThan(0);
+        expect(response.body.hasOwnProperty('updated')).toBe(true);
+        expect(response.body.hasOwnProperty('likes')).toBe(true);
     });
 });
-
