@@ -69,13 +69,23 @@
       }
     },
     "/authorization/callback": {
-      "post": {
+      "get": {
         "tags": [
           "authorization"
         ],
         "description": "",
-        "parameters": [],
-        "responses": {}
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/posts/": {
