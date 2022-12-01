@@ -29,7 +29,7 @@ afterAll(() => {
   
 beforeEach(() => {
   const app = express();
-  app.use('/users', require('../../routes/users'));
+  app.use('/users', require('../users'));
   server = app.listen();
 });
 
