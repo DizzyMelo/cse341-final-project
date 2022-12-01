@@ -17,8 +17,15 @@ const AuthController = {
       
     },
 
-    logout: (request: express.Request, response: express.Response) => {
+    logout: async (request: express.Request, response: express.Response) => {
       // #swagger.tags = ['authorization']
+      const logoutUrl = `${
+        appConfig.authorizationHost
+      }/v2/logout?client_id=${
+        appConfig.clientId
+      }&returnTo=${appConfig.baseUrl}`;
+      
+      response.redirect(logoutUrl);
     },
   
     callback: async (request: express.Request, response: express.Response, next: any) => {
