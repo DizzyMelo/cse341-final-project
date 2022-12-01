@@ -7,7 +7,7 @@ interface IUser {
     login: string;
     email: string;
     organization: string;
-    permissions: any[];
+    permissions: string[];
     updated: string;    // Timestamp in ISO 8601 format
     likes: number;
 }
