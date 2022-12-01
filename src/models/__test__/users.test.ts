@@ -2,7 +2,7 @@
 const mockingoose = require('mockingoose');
 const controller = require('../users');
 
-import { db } from '../../models';
+import { db } from '..';
 const User = db.users;
 
 let now: Date;
