@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-const controller = require('../controllers/comments');
+import controller from '../controllers/comments';
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);

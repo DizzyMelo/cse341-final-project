@@ -1,4 +1,4 @@
-import express from 'express';
+import {Request, Response} from 'express';
 import { ObjectId } from 'mongodb';
 import { validId } from '../common/utilities';
 import { db } from '../models';
@@ -7,7 +7,7 @@ const Comment = db.comments;
 
 /////////
 // POST
-async function post(request: express.Request, response: express.Response): Promise<void> {
+async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
         if (!validId(request.body.userId, "User", response)) { return; }
@@ -28,8 +28,9 @@ async function post(request: express.Request, response: express.Response): Promi
 
         response.status(201).send(comment);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
@@ -38,7 +39,7 @@ async function post(request: express.Request, response: express.Response): Promi
 // GET
 //
 // getAll returns all documents from the collection.
-async function getAll(request: express.Request, response: express.Response): Promise<void> {
+async function getAll(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
         // Get all documents from this collection
@@ -46,14 +47,15 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
         response.send(comments);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 // getOne returns one document specified by the ID parameter
-async function getOne(request: express.Request, response: express.Response): Promise<void> {
+async function getOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
         // Get the document specified by the ID in request.params.id
@@ -68,15 +70,16 @@ async function getOne(request: express.Request, response: express.Response): Pro
         
         response.send(comment);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 
 // getComments returns an array of comments for a specified Answer ID or Post ID parameter.
-async function getComments(request: express.Request, response: express.Response): Promise<void> {
+async function getComments(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     const id =  request.params.id;
 
@@ -95,7 +98,7 @@ async function getComments(request: express.Request, response: express.Response)
 
 ////////
 // PUT
-async function put(request: express.Request, response: express.Response): Promise<void> {
+async function put(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
         const id = request.params.id;
@@ -124,15 +127,16 @@ async function put(request: express.Request, response: express.Response): Promis
         
         response.status(204).send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 ///////////
 // DELETE 
-async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
+async function deleteOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['comments']
     try {
         const id = request.params.id;
@@ -147,12 +151,13 @@ async function deleteOne(request: express.Request, response: express.Response): 
 
         response.send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
-module.exports = {
+export default {
     post,
     getAll,
     getOne,

@@ -1,13 +1,12 @@
-import express from 'express';
+import {Request, Response} from 'express';
 import { isValidObjectId } from 'mongoose';
 import { db } from '../models';
 const User = db.users;
 
 /////////
 // POST
-async function post(request: express.Request, response: express.Response): Promise<void> {
+async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
-    let user: any = {};
 
     try {
         // TODO: Check the request.body.login to see if the login is already in use.
@@ -26,12 +25,13 @@ async function post(request: express.Request, response: express.Response): Promi
             "likes": 0
         }
 
-        user = await User.create(document);
+        const user = await User.create(document);
 
         response.status(201).send(user);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
@@ -40,7 +40,7 @@ async function post(request: express.Request, response: express.Response): Promi
 // GET
 //
 // getAll returns all documents in the collection.
-async function getAll(request: express.Request, response: express.Response): Promise<void> {
+async function getAll(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
         // Get all documents from this collection
@@ -48,14 +48,15 @@ async function getAll(request: express.Request, response: express.Response): Pro
 
         response.send(users);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 // getOne returns one document specified by the ID parameter
-async function getOne(request: express.Request, response: express.Response): Promise<void> {
+async function getOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
         // Get the document specified by the ID in request.params.id
@@ -73,14 +74,15 @@ async function getOne(request: express.Request, response: express.Response): Pro
         
         response.send(user);
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 // getUserByEmail returns a User document according to the email address field specified by the ID parameter
-async function getUserByEmail(request: express.Request, response: express.Response): Promise<void> {
+async function getUserByEmail(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     const id =  request.params.id;
 
@@ -96,7 +98,7 @@ async function getUserByEmail(request: express.Request, response: express.Respon
 
 
 // getUserByLogin returns a User document according to Login ID specified by the ID parameter
-async function getUserByLogin(request: express.Request, response: express.Response): Promise<void> {
+async function getUserByLogin(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     const id =  request.params.id;
 
@@ -113,7 +115,7 @@ async function getUserByLogin(request: express.Request, response: express.Respon
 
 ////////
 // PUT
-async function put(request: express.Request, response: express.Response): Promise<void> {
+async function put(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
         const id = request.params.id;
@@ -144,15 +146,16 @@ async function put(request: express.Request, response: express.Response): Promis
         
         response.status(204).send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
 
 ///////////
 // DELETE 
-async function deleteOne(request: express.Request, response: express.Response): Promise<void> {
+async function deleteOne(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
     try {
         const id = request.params.id;
@@ -170,12 +173,13 @@ async function deleteOne(request: express.Request, response: express.Response): 
 
         response.send();
     }
-    catch (error: any) {
-        response.status(500).send(error.message);
+    catch (error) {
+        if (error instanceof Error) response.status(500).send(error.message);
+        else response.status(500).send(error);
     }
 }
 
-module.exports = {
+export default {
     post,
     getAll,
     getOne,

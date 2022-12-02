@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import 'dotenv/config';
 import express from 'express';
 const app: express.Application = express();
 
-import * as swaggerUI from 'swagger-ui-express';
-const swaggerDocument = require('../swagger.json')
+import swaggerUI from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 
 import mongoose from 'mongoose';
 import { db } from './models';
@@ -31,7 +32,7 @@ db.mongoose.connect(db.url as string, {
 .then(() => { 
   console.log('Connected to the Socrates database.')
 })
-.catch((error: any) => {
+.catch((error: Error) => {
   console.log('Cannot connect to the Socrates database.', error);
   process.exit();
 });

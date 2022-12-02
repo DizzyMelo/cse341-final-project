@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-const controller = require('../controllers/users');
+import controller from '../controllers/users';
 
 router.post('/', controller.post);
 router.get('/', controller.getAll);

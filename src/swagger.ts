@@ -1,4 +1,4 @@
-const swaggerAutogen = require('swagger-autogen')();
+import swaggerAutogen from 'swagger-autogen';
 
 const doc = {
     info: {
@@ -34,8 +34,8 @@ const doc = {
       ],
     };
 
-const outputFile = './swagger.json';
-const endpointsFiles = ['./dist/app.js'];
+const outputFile = './src/swagger.json';
+const endpointsFiles = ['./src/app.ts'];
 
 // Generate output file
-swaggerAutogen(outputFile, endpointsFiles, doc);
+swaggerAutogen()(outputFile, endpointsFiles, doc)
