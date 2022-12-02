@@ -1,4 +1,6 @@
-module.exports = {
+import type {Config} from 'jest';
+
+const config: Config = {
     "testEnvironment": 'node',
     "roots": [
       "<rootDir>/src"
@@ -12,3 +14,4 @@ module.exports = {
     },
   }
   
+  export default config;
