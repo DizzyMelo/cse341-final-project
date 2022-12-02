@@ -91,7 +91,7 @@
     "/posts/": {
       "post": {
         "tags": [
-          " "
+          "posts"
         ],
         "description": "",
         "parameters": [
