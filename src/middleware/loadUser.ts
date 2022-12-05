@@ -7,9 +7,8 @@ interface IAuthResponse {
   email: string;
   given_name: string;
   family_name: string;
-  locale: string;
-  picture: string;
   updated_at: string;
+  nickname: string;
 }
 
 export async function loadUser(
@@ -44,7 +43,8 @@ async function findOrCreateUser(authZeroJson: IAuthResponse) {
   if (existingUser) return existingUser;
 
   const newUser = await User.create({
-    login: 'no provided',
+    identifier: authZeroJson.sub,
+    login: authZeroJson.nickname,
     email: authZeroJson.email,
     firstName: authZeroJson.given_name,
     lastName: authZeroJson.family_name,

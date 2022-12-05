@@ -2,6 +2,7 @@ import { Schema, model } from 'mongoose';
 
 // Note that the created timestamp is incorporated into the MongoDB ObjectId and can be extracted.
 interface IUser {
+    identifier: string;
     lastName: string;
     firstName: string;
     login: string;
@@ -13,6 +14,7 @@ interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
+    identifier: { type: String, required: true },
     lastName: { type: String, required: true },
     firstName: { type: String, required: true },
     login: { type: String, required: true },
