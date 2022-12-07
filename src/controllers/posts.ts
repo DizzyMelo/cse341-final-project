@@ -37,9 +37,9 @@ async function getAll(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
     try {
         // Get all documents from this collection
-        const questions = await Post.find();
+        const posts = await Post.find();
 
-        response.send(questions);
+        response.send(posts);
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
@@ -59,13 +59,13 @@ async function getOne(request: Request, response: Response): Promise<void> {
             return;
         }
 
-        const question = await Post.findById(id);
-        if (!question) {
+        const post = await Post.findById(id);
+        if (!post) {
             response.status(404).send();
             return;
         }
         
-        response.send(question);
+        response.send(post);
     }
     catch (error) {
         if (error instanceof Error) response.status(500).send(error.message);
