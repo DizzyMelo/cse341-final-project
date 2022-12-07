@@ -15,6 +15,7 @@ async function post(request: Request, response: Response): Promise<void> {
 
         // Create a new document
         const document = {
+            "identifier": request.body.identifier,
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
@@ -128,6 +129,7 @@ async function put(request: Request, response: Response): Promise<void> {
 
         // Update the document specified by the ID in request.params.id
         const document = {
+            "identifier": request.body.identifier,
             "lastName": request.body.lastName,
             "firstName": request.body.firstName,
             "login": request.body.login,
