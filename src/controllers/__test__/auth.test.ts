@@ -23,17 +23,21 @@ let id: ObjectId;
 describe("login test", () => {
     test("login", async () => {
         const response = await request(server).get("/authorization/login");
-        expect(response.status).toBe(200);
-        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.status).toBe(302);
     });
 });
+
 
 describe("logout test", () => {
     test("logout", async () => {
         const response = await request(server).get("/authorization/logout");
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(302);
     });
 });
 
 
+
 // TODO: Add tests for callback when it is ready to test
+describe("callback test", () => {
+
+});
