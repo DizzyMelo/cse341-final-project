@@ -89,6 +89,21 @@
       }
     },
     "/posts/": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "posts"
@@ -117,21 +132,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "posts"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -420,6 +420,21 @@
       }
     },
     "/comments/": {
+      "get": {
+        "tags": [
+          "comments"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "comments"
@@ -448,21 +463,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "comments"
-        ],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
           "500": {
             "description": "Internal Server Error"
@@ -629,23 +629,26 @@
             "schema": {
               "type": "object",
               "properties": {
+                "identifier": {
+                  "example": "TBD"
+                },
                 "lastName": {
-                  "example": "any"
+                  "example": "Doe"
                 },
                 "firstName": {
-                  "example": "any"
+                  "example": "John"
                 },
                 "login": {
-                  "example": "any"
+                  "example": "john.doe"
                 },
                 "email": {
-                  "example": "any"
+                  "example": "john.doe@email.com"
                 },
                 "organization": {
-                  "example": "any"
+                  "example": "ACME, Inc."
                 },
                 "permissions": {
-                  "example": "any"
+                  "example": [ "admin", "read-write" ]
                 }
               }
             }
@@ -723,6 +726,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "identifier": {
+                  "example": "any"
+                },
                 "lastName": {
                   "example": "any"
                 },
