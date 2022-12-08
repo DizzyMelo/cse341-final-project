@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import appConfig from '../config/app';
+import fetch from 'node-fetch';
 
 const AuthController = {
     login: (request: Request, response: Response) => {
