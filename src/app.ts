@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import 'dotenv/config';
 import express from 'express';
+import path from 'path';
 const app: express.Application = express();
 
 import swaggerUI from 'swagger-ui-express';
@@ -11,12 +12,11 @@ import { db } from './models';
 
 const port = process.env.PORT || 3000;
 
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.use(express.json());        // With Express 4.16 and later, we no longer need body-parser.  Express does it.
 app.use(express.urlencoded({ extended: true }));  // Must use extended option
-
-app.get('/', (req, res) => {
-  res.send('<h2>The Socratic Method App</h2> <p>See <a href="api-docs">/api-docs</a> endpoint for documentation.</p>');
-});
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/authorization', require('./routes/auth'));
