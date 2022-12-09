@@ -9,8 +9,6 @@ async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
 
     try {
-        // TODO: Check the request.body.login to see if the login is already in use.
-
         const now: Date = new Date();
 
         // Create a new document
