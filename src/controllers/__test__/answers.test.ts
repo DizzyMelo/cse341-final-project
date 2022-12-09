@@ -69,3 +69,21 @@ describe("Get all answers", () => {
         expect(response.body.hasOwnProperty('likes')).toBe(true);
     });
 });
+
+
+describe("Negative GET tests", () => {
+  test("Invalid ObjectID - not even close", async () => {
+        const response = await request(server).get(`/answers/abc123`);
+        expect(response.status).toBe(400);
+  });
+
+  test("Invalid ObjectID - close but not quite", async () => {
+    const response = await request(server).get(`/answers/6393959f572976f5b3675c5`);
+    expect(response.status).toBe(400);
+  });
+
+test("Non-existent ObjectID", async () => {
+    const response = await request(server).get(`/answers/6393959f572976f5b3675c50`);
+    expect(response.status).toBe(404);
+  });
+});
