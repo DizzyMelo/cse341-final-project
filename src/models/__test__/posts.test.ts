@@ -1,6 +1,6 @@
 // Test Post model with Mockingoose
 const mockingoose = require('mockingoose');
-const controller = require('../users');
+const controller = require('../posts');
 
 import { db } from '..';
 const Post = db.posts;
@@ -27,7 +27,7 @@ describe('test User model', () => {
       mockingoose(Post).toReturn(_doc, 'findOne');
 
   
-      return Post.findById({ _id: '507f191e810c19729de860ea' }).then(doc => {
+      return Post.findById({ _id: '507f191e810c19729de860eb' }).then(doc => {
         expect(JSON.parse(JSON.stringify(doc))).toMatchObject(_doc);
       });
     });
