@@ -19,6 +19,7 @@ describe('test User model', () => {
         _id: '507f191e810c19729de860ea',
         lastName: 'Balasubramanian',
         firstName: 'Nandakumar',
+        identifier: 'auth0|6393a183d23051abb37f9457',
         login: 'nbalasu',
         email: 'nkumarb@email.com.in',
         organization: 'Wipro',
