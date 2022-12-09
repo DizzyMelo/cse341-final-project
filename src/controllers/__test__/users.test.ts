@@ -97,22 +97,68 @@ describe("Get one user", () => {
 });
 
 
+describe("Negative GET tests", () => {
+  test("Invalid ObjectID - not even close", async () => {
+        const response = await request(server).get(`/users/abc123`);
+        expect(response.status).toBe(400);
+  });
 
-describe("CRUD operations", () => {
+  test("Invalid ObjectID - close but not quite", async () => {
+    const response = await request(server).get(`/users/6393959f572976f5b3675c5`);
+    expect(response.status).toBe(400);
+  });
+
+test("Non-existent ObjectID", async () => {
+    const response = await request(server).get(`/users/6393959f572976f5b3675c50`);
+    expect(response.status).toBe(404);
+  });
+});
+
+
+/* The following strangely returns a 201 without an authorization header
+describe("CRUD operations - without authorization", () => {
+  const doc = {
+    lastName: "Scrooge",
+    firstName: "Ebenezer",
+    identifier: "auth0|639393e9ce56ffa55d066b42",  // unused objectId
+    login: "escrooge",
+    email: "ebenezer@marleyandscrooge.co.uk",
+    organization: "Marley and Scrooge Counting House",
+    permissions: ['read-write']
+  };
+
+  test("Create - unauthorized", async () => {
+    let response = await request(server).post("/users")
+    .set('Content-type', 'application/json')
+    .send(doc);
+
+    expect(response.status).toBe(403);
+  });
+});
+*/
+
+
+describe("CRUD operations - happy path", () => {
   let createdId: string;
 
   test("Create - happy path", async () => {
     const doc = {
       lastName: "Bailey",
       firstName: "George",
+      identifier: "auth0|63937a335979f23820a2c71d",  // unused objectId
       login: "gbailey",
       email: "georgeb@buildingandloan.com",
       organization: "Bedford Falls Building and Loan",
       permissions: ['read-write']
     } as any;
 
+    const headers = {
+      'Content-type': 'application/json',
+      Authorization: 'Bearer ' + process.env.BEARER_TOKEN
+    }
+
     let response = await request(server).post("/users")
-      .set('Content-type', 'application/json')
+      .set(headers)
       .send(doc);
 
     expect(response.status).toBe(201);
@@ -127,19 +173,25 @@ describe("CRUD operations", () => {
       // Add a "like" and PUT
       doc.likes = 1;
 
-      response = await request(server).put(`/users/${createdId}`);
+      response = await request(server).put(`/users/${createdId}`)
+        .set(headers)
+        .send(doc);
       expect(response.status).toBe(204);
 
       // Clean up
-      response = await request(server).delete(`/users/${createdId}`);
+      response = await request(server).delete(`/users/${createdId}`)
+        .set( { Authorization: 'Bearer ' + process.env.BEARER_TOKEN })
+        .send();
       expect(response.status).toBe(200);
     }
   });
+
 
   describe("Create - negative tests", () => {
     const doc = {
       lastName: "Poppins",
       firstName: "Mary",
+      identifier: "auth0|639394d9e13b292bb7d5bea8",  // unused objectId
       login: "poppinsm",
       email: "poppinsm@banksmanor.uk",
       organization: "Banks Family",
