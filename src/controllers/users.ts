@@ -5,6 +5,10 @@ const User = db.users;
 
 /////////
 // POST
+//
+// No longer used
+// Superseded by findOrCreateUser() in ../middleware/loadUser.ts
+//
 async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['users']
 

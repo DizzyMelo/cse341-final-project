@@ -3,7 +3,7 @@ const router = express.Router();
 import controller from '../controllers/users';
 import { loadUser } from '../middleware/loadUser'
 
-router.post('/', controller.post);
+// router.post('/', controller.post);   // Superseded by findOrCreateUser() in ../middleware/loadUsers.ts
 router.get('/', controller.getAll);
 router.get('/:id', controller.getOne);
 router.get('/email/:id', controller.getUserByEmail);
