@@ -20,7 +20,7 @@ export async function loadUser(
   if (req.headers.authorization) {
     const authZeroUser = await fetchAuthZeroUser(req.headers.authorization);
 
-    await findOrCreateUser(authZeroUser);
+    req.user = await findOrCreateUser(authZeroUser);
   } else {
     res.sendStatus(403);
     return;
