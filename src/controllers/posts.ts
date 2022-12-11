@@ -7,6 +7,10 @@ const Post = db.posts;
 // POST
 async function post(request: Request, response: Response): Promise<void> {
     // #swagger.tags = ['posts']
+    if (request.user) {
+        ;
+    }
+    
     try {
         const now: Date = new Date();
         // Create a new document
