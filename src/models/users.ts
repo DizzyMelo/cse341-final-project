@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 // Note that the created timestamp is incorporated into the MongoDB ObjectId and can be extracted.
-interface IUser {
+export interface IUser {
     identifier: string;
     lastName: string;
     firstName: string;
