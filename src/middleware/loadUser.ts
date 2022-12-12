@@ -22,7 +22,7 @@ export async function loadUser(
 
     req.user = await findOrCreateUser(authZeroUser);
   } else {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
   next();
